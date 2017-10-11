@@ -74,18 +74,41 @@ void removeEdge(int v1, int v2){
   remove_edge(v1, v2, g);
 }
 
-int main(){
-
-  // int vertexNum = 14;
-  // MyGraphType g(vertexNum);
-  //
-  // for(int i = 0; i<=vertexNum; i++){
-  //   g[i].val = i+1;
-  // }
+void modelSampleGraph(){
   for(int i = 1; i<=14; i++){
     addVertex(i);
   }
-  addEdge(1,3,5);
-  printEdges();
+
+  addEdge(1,4,8);
+  addEdge(4,8,2);
+  addEdge(8,9,3);
+  addEdge(9,12,4);
+  addEdge(12,14,9);
+  addEdge(14,13,2);
+  addEdge(13,14,6);
+  addEdge(11,12,6);
+  addEdge(12,11,8);
+  addEdge(12,9,2);
+  addEdge(9,10,2);
+  addEdge(10,6,6);
+  addEdge(6,13,4);
+  addEdge(8,7,3);
+  addEdge(7,4,6);
+  addEdge(4,7,3);
+  addEdge(4,5,1);
+  addEdge(5,6,9);
+  addEdge(1,3,8);
+  addEdge(3,2,7);
+  addEdge(2,5,7);
+  addEdge(3,5,8);
+  addEdge(3,10,4);
+  addEdge(10,3,10);
+  addEdge(5,6,9);
+}
+
+int main(){
+
+  modelSampleGraph();
+
 
 }
