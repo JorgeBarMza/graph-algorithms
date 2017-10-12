@@ -22,36 +22,67 @@ typedef DistanceProperty::matrix_map_type DistanceMatrixMap;
 int main()
 {
   Graph g;
+  // const int num_edges = 11;
+  //
+  // // define edges
+  // int edges[] = { 1,     2,
+  //                 1,     3,
+  //                 1,     4,
+  //                 2,     5,
+  //                 3,     4,
+  //                 3,     6,
+  //                 4,     5,
+  //                 4,     6,
+  //                 4,     7,
+  //                 5,     7,
+  //                 6,     7 };
+  //
+  // // define the weight on edges
+  // t_weight weight[] = {  4,
+  //                       10,
+  //                        3,
+  //                        1,
+  //                       12,
+  //                       20,
+  //                        6,
+  //                        3,
+  //                        0,
+  //                        3,
+  //                        9 };
+  const int num_edges = 14;
 
-  const int num_edges = 11;
-
-  int edges[] = { 1,     2,
-                  1,     3,
-                  1,     4,
+  int edges[] = { 0,     1,
+                  0,     7,
+                  1,     7,
+                  1,     2,
+                  7,     6,
+                  7,     8,
+                  2,     8,
                   2,     5,
+                  2,     3,
+                  6,     5,
+                  3,     5,
                   3,     4,
-                  3,     6,
-                  4,     5,
-                  4,     6,
-                  4,     7,
-                  5,     7,
-                  6,     7 };
+                  5,     4,
+                  5,     6 };
 
   t_weight weight[] = {  4,
-                        10,
-                         3,
+                         8,
+                        11,
+                         8,
                          1,
-                        12,
-                        20,
-                         6,
-                         3,
-                         0,
-                         3,
-                         9 };
+                         7,
+                         2,
+                         4,
+                         7,
+                         2,
+                        14,
+                         9,
+                        10,
+                         6 };
 
   for (std::size_t k = 0; k < num_edges; ++k)
-    boost::add_edge(edges[k*2]-1, edges[k*2+1]-1, weight[k], g);
-
+    boost::add_edge(edges[k*2], edges[k*2+1], weight[k], g);
   WeightMap weight_pmap = boost::get(boost::edge_weight, g);
 
   DistanceMatrix distances(num_vertices(g));
@@ -81,7 +112,5 @@ int main()
     std::cout << std::endl;
   }
   std::cout << "duration: " << duration << " μs\n";
-
-
   return 0;
 }
