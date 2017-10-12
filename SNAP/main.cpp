@@ -260,14 +260,14 @@ int main() {
     
     cout << "DFS:\n";
     auto t1_e = high_resolution_clock::now();
-    undirected_graph.DFS(0);
+    directed_graph.DFS(0);
     auto t2_e = high_resolution_clock::now();
     auto duration_e = duration_cast<microseconds>( t2_e - t1_e ).count();
     cout << "duration: " << duration_e << " μs\n";
     
     cout << "BFS:\n";
     auto t1_f = high_resolution_clock::now();
-    undirected_graph.BFS(0);
+    directed_graph.BFS(0);
     auto t2_f = high_resolution_clock::now();
     auto duration_f = duration_cast<microseconds>( t2_f - t1_f ).count();
     cout << "duration: " << duration_f << " μs\n";
@@ -288,14 +288,14 @@ int main() {
     
     cout << "Dijkstra:\n";
     auto t1_i = high_resolution_clock::now();
-    undirected_graph.Dijkstra();
+    directed_graph.Dijkstra();
     auto t2_i = high_resolution_clock::now();
     auto duration_i = duration_cast<microseconds>( t2_i - t1_i ).count();
     cout << "duration: " << duration_i << " μs\n";
     
     cout << "Floyd-Warshall:\n";
     auto t1_j = high_resolution_clock::now();
-    undirected_graph.FloydWarshall();
+    directed_graph.FloydWarshall();
     auto t2_j = high_resolution_clock::now();
     auto duration_j = duration_cast<microseconds>( t2_j - t1_j ).count();
     cout << "duration: " << duration_j << " μs\n";
