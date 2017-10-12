@@ -6,6 +6,8 @@
 #include <boost/graph/named_function_params.hpp>
 #include <queue>
 #include <chrono>
+#include <limits.h>
+#define INF INT_MAX
 
 using namespace std;
 using namespace std::chrono;
@@ -16,7 +18,7 @@ using namespace std::chrono;
 
 typedef boost::adjacency_list<boost::vecS, boost::vecS,
                               boost::undirectedS,
-                              int,
+                              pair<int,int>,
                               boost::property<boost::edge_weight_t, int>
                               > undirectedG;
 
@@ -30,7 +32,7 @@ boost::property_map<undirectedG, boost::edge_weight_t>::type weightmap =
 
 void addVertex(int value){
   auto v = add_vertex(g);
-  g[v] = value;
+  g[v] = make_pair(INF,value);
 }
 
 void removeVertex(int value){
@@ -47,7 +49,7 @@ void addEdge(int v1, int v2, int w){
 void printVertices(){
   auto vpair = vertices(g);
   for(auto iter=vpair.first; iter!=vpair.second; iter++) {
-      cout << "vertex " << g[*iter] << "\n";
+      cout << "vertex " << g[*iter].second << "\n";
   }
 }
 
@@ -60,6 +62,38 @@ void printEdges(){
 
 void removeEdge(int v1, int v2){
   remove_edge(v1, v2, g);
+}
+
+void primMST(){
+    priority_queue<pair<int,int>, vector<pair<int,int>> , greater<pair<int,int>> > pq; // minheap
+
+    int src = 0; //start from node 0
+    g[src].second = 0;
+    int V = num_vertices(g);
+    vector<int> key(V, INF);
+    vector<int> parent(V, -1);
+    int inMST = 0; //bitvector
+    pq.push(make_pair(0, src));
+    key[src] = 0;
+
+    while (!pq.empty()){
+        int u = pq.top().second;
+        pq.pop();
+        inMST |= (1 << u);
+
+        auto adjacentRange = adjacent_vertices(u, g);
+        for(auto i = adjacentRange.first; i != adjacentRange.second; i++){
+          int v = g[*i].second;
+          int weight = weightmap[edge(u,*i,g).first];
+          if (!(inMST & (1 << v)) && key[v] > weight){
+              key[v] = weight;
+              pq.push(make_pair(key[v], v));
+              parent[v] = u;
+          }
+        }
+    }
+    for (int i = 1; i < V; ++i)
+        printf("%d - %d\n", parent[i], i);
 }
 
 
@@ -86,5 +120,12 @@ void modelDirectedGraph(){
 int main(){
 
   modelDirectedGraph();
+
+  cout << "Prim:\n";
+  auto t1 = high_resolution_clock::now();
+  primMST();
+  auto t2 = high_resolution_clock::now();
+  auto duration = duration_cast<microseconds>( t2 - t1 ).count();
+  cout << "duration: " << duration << " μs\n";
 
 }
